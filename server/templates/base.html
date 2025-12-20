@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ESP32 Camera WebSocket Streaming" />
+    <title>ESP32 Vision{% block title %}{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <!-- CSS Principal -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+
+    {% block extra_head %}{% endblock %}
+  </head>
+
+  <body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <h2 class="loading-title">ESP32 Vision</h2>
+        <p class="loading-subtitle">Iniciando sistema...</p>
+      </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="app-container">
+      <!-- Header -->
+      {% block header %}
+      <header class="app-header">
+        <!-- Logo y Status -->
+        <div class="header-section">
+          <div class="brand">
+            <div class="brand-icon">
+              <i data-lucide="camera"></i>
+            </div>
+            <div class="brand-text">
+              <h1 class="brand-title">
+                <span class="text-gradient">ESP32</span>
+                <span>Vision</span>
+              </h1>
+              <p class="brand-subtitle">WebSocket v2.1</p>
+            </div>
+          </div>
+
+          <div class="status-indicator">
+            <div class="status-dot-container">
+              <div id="statusDot" class="status-dot status-disconnected"></div>
+              <div id="statusRing" class="status-ring"></div>
+            </div>
+            <div class="status-text-container">
+              <span id="statusText" class="status-text">Desconectado</span>
+              <span id="connectionTime" class="status-subtext">--:--:--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Stats - Desktop -->
+        <div class="header-section header-stats">
+          <div class="stat-item">
+            <span class="stat-label">FPS:</span>
+            <span id="fpsCounter" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Res:</span>
+            <span id="currentResHeader" class="stat-value">VGA</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Latencia:</span>
+            <span id="latencyHeader" class="stat-value">--</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">IP:</span>
+            <span id="cameraIpHeader" class="stat-value">--</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="header-section header-actions">
+          <button id="darkModeToggle" class="icon-btn" title="Tema">
+            <i data-lucide="moon"></i>
+          </button>
+        </div>
+      </header>
+      {% endblock %}
+
+      <!-- Content Area -->
+      <div class="content-wrapper">
+        {% block content %}{% endblock %}
+        <!-- Video Feed -->
+        <main class="video-section">
+          <div class="video-container">
+            <img
+              id="videoStream"
+              class="video-stream"
+              alt="Camera Stream"
+              style="display: none"
+            />
+
+            <!-- No Stream Overlay -->
+            <div id="videoOverlay" class="no-stream-overlay">
+              <div class="overlay-content">
+                <div class="overlay-icon">
+                  <i data-lucide="camera-off"></i>
+                </div>
+                <h3 class="overlay-title">Cámara Desconectada</h3>
+                <p class="overlay-text">Esperando conexión desde ESP32...</p>
+                <div class="overlay-status">
+                  <div class="pulse-dot"></div>
+                  <span>Conectando...</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Floating Button -->
+            <button id="mobileRestartBtn" class="mobile-fab">
+              <i data-lucide="refresh-cw"></i>
+            </button>
+
+            <!-- Video Info Overlay -->
+            <div class="video-info">
+              <div class="info-badge">
+                <span class="info-label">FPS:</span>
+                <span id="videoFps" class="info-value">0</span>
+              </div>
+              <div class="info-badge">
+                <span class="info-label">Quality:</span>
+                <span id="videoQuality" class="info-value">12</span>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Control Panel -->
+        <aside id="controlPanel" class="control-panel">
+          {% include "components/controls_sidebar.html" %}
+        </aside>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="notification" class="toast-notification">
+      <div class="toast-content">
+        <i id="notificationIcon" data-lucide="info" class="toast-icon"></i>
+        <span id="notificationMessage" class="toast-message"></span>
+      </div>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/utils.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/notifications.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/websocket.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/controls.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/image-saver.js') }}"
+    ></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/app.js') }}"
+    ></script>
+
+    <!-- Global Configuration -->
+    <script>
+      window.APP_CONFIG = {
+        WS_URL: `ws://${window.location.hostname}:6972`,
+        API_BASE: `http://${window.location.hostname}:6971`,
+        HOSTNAME: window.location.hostname,
+        RESOLUTIONS: "{}",
+        DEFAULT_RESOLUTION: '"5"',
+      };
+      console.log("APP_CONFIG loaded:", window.APP_CONFIG);
+    </script>
+
+    {% block scripts %}{% endblock %}
+
+    <!-- Fallback para navegadores antiguos -->
+    <script nomodule>
+      document.getElementById("loadingOverlay").style.display = "none";
+      document.getElementById("noStreamOverlay").innerHTML = `
+            <div style="text-align: center; padding: 2rem;">
+                <h3 style="color: #ef4444; margin-bottom: 1rem;">⚠️ Navegador No Compatible</h3>
+                <p style="color: #9ca3af;">Usa Chrome, Firefox o Edge moderno.</p>
+            </div>
+        `;
+    </script>
+
+    <!-- Initialize Lucide Icons -->
+    <script type="module">
+      // Wait for APP_CONFIG to be available
+      function initApp() {
+        if (!window.APP_CONFIG) {
+          setTimeout(initApp, 50);
+          return;
+        }
+
+        lucide.createIcons();
+
+        // Initialize app
+        import("/static/js/app.js").then((module) => {
+          const CameraApp = module.default;
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", () => {
+              window.cameraApp = new CameraApp();
+            });
+          } else {
+            window.cameraApp = new CameraApp();
+          }
+        });
+
+        // Hide loading after a delay
+        setTimeout(() => {
+          document.getElementById("loadingOverlay").style.opacity = "0";
+          setTimeout(() => {
+            document.getElementById("loadingOverlay").style.display = "none";
+          }, 300);
+        }, 1000);
+      }
+
+      initApp();
+    </script>
+  </body>
+</html>

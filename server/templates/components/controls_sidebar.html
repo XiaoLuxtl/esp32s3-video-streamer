@@ -1,0 +1,354 @@
+<!-- Panel Header -->
+<div class="panel-header">
+    <h2 class="panel-title">
+        <i data-lucide="sliders"></i>
+        Controles
+    </h2>
+</div>
+
+<!-- Camera Configuration Section -->
+<div class="panel-section">
+    <h3 class="section-title">⚙️ Configuración de Cámara</h3>
+
+    <!-- Resolution -->
+    <div class="control-group">
+        <label for="resolution" class="control-label">
+            <span>Resolución</span>
+            <span id="currentResolution" class="control-value">VGA</span>
+        </label>
+        <select id="resolution" class="form-select">
+            {% for value, name in resolutions.items() %}
+            <option value="{{ value }}" {% if value==default_resolution %}selected{% endif %}>
+                {{ name }}
+            </option>
+            {% endfor %}
+        </select>
+        <button id="resetResolutionBtn" class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;">
+            <i data-lucide="refresh-cw"></i>
+            Resetear Resolución
+        </button>
+    </div>
+
+    <!-- Quality -->
+    <div class="control-group">
+        <label for="quality" class="control-label">
+            <span>Calidad JPEG</span>
+            <span id="qualityValue" class="control-value">12</span>
+        </label>
+        <input type="range" id="quality" min="10" max="63" value="12" class="range-slider">
+        <div class="range-helper">
+            <span class="text-success">Alta (10)</span>
+            <span class="text-danger">Baja (63)</span>
+        </div>
+    </div>
+
+    <!-- FPS -->
+    <div class="control-group">
+        <label for="fps" class="control-label">
+            <span>Frames por Segundo</span>
+            <span id="fpsValue" class="control-value">20</span>
+        </label>
+        <input type="range" id="fps" min="1" max="60" value="20" class="range-slider">
+        <div class="range-helper">
+            <span>1</span>
+            <span>30</span>
+            <span>60</span>
+        </div>
+    </div>
+
+    <!-- Mode -->
+    <div class="control-group">
+        <label for="cameraMode" class="control-label">
+            <span>Modo de Operación</span>
+        </label>
+        <select id="cameraMode" class="form-select">
+            <option value="0">⚡ Velocidad (Baja Latencia)</option>
+            <option value="1">🛡️ Estabilidad (Calidad)</option>
+        </select>
+        <div id="modeHint" class="hidden"
+            style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(6, 182, 212, 0.1); border-radius: var(--radius-md); font-size: 0.75rem; color: var(--text-muted);">
+            <span id="modeHintText"></span>
+        </div>
+    </div>
+
+    <!-- Camera Effects -->
+    <div class="control-group">
+        <label class="control-label">
+            <span>Efectos de Cámara</span>
+        </label>
+        <div class="btn-grid">
+            <button id="hmirrorToggle" class="btn btn-secondary">
+                <i data-lucide="arrow-left-right"></i>
+                <span>Espejo H</span>
+                <span class="effect-status" data-status="off" style="margin-left: auto; font-size: 0.75rem;">OFF</span>
+            </button>
+            <button id="vflipToggle" class="btn btn-secondary">
+                <i data-lucide="arrow-up-down"></i>
+                <span>Voltear V</span>
+                <span class="effect-status" data-status="off" style="margin-left: auto; font-size: 0.75rem;">OFF</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Image Adjustments Section -->
+<div class="panel-section">
+    <h3 class="section-title">🎨 Ajustes de Imagen</h3>
+
+    <!-- Brightness -->
+    <div class="control-group">
+        <label for="brightness" class="control-label">
+            <span>Brillo</span>
+            <span id="brightnessValue" class="control-value">0</span>
+        </label>
+        <input type="range" id="brightness" min="-2" max="2" value="0" step="1" class="range-slider">
+    </div>
+
+    <!-- Contrast -->
+    <div class="control-group">
+        <label for="contrast" class="control-label">
+            <span>Contraste</span>
+            <span id="contrastValue" class="control-value">0</span>
+        </label>
+        <input type="range" id="contrast" min="-2" max="2" value="0" step="1" class="range-slider">
+    </div>
+
+    <!-- Exposure -->
+    <div class="control-group">
+        <label for="exposure" class="control-label">
+            <span>Exposición</span>
+            <span id="exposureValue" class="control-value">0</span>
+        </label>
+        <input type="range" id="exposure" min="-2" max="2" value="0" step="1" class="range-slider">
+    </div>
+
+    <!-- Gain -->
+    <div class="control-group">
+        <label for="gain" class="control-label">
+            <span>Ganancia</span>
+            <span id="gainValue" class="control-value">0</span>
+        </label>
+        <input type="range" id="gain" min="0" max="30" value="0" class="range-slider">
+    </div>
+
+    <!-- White Balance -->
+    <div class="control-group">
+        <label for="whitebalance" class="control-label">
+            <span>Balance de Blancos</span>
+            <span id="whitebalanceValue" class="control-value">Auto</span>
+        </label>
+        <input type="range" id="whitebalance" min="0" max="4" value="0" step="1" class="range-slider">
+        <div class="range-helper" style="font-size: 0.65rem;">
+            <span>Auto</span>
+            <span>Sol</span>
+            <span>Nublado</span>
+            <span>Tungsteno</span>
+            <span>Fluor</span>
+        </div>
+    </div>
+
+    <!-- Reset Button -->
+    <button id="resetImageAdj" class="btn btn-secondary" style="width: 100%;">
+        <i data-lucide="refresh-cw"></i>
+        Restaurar Todos los Ajustes
+    </button>
+</div>
+
+<!-- Image Saver Section -->
+<div class="panel-section">
+    <h3 class="section-title">💾 Guardado de Imágenes</h3>
+
+    <!-- Toggle and Stats -->
+    <div class="control-group">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+            <span style="font-size: 0.875rem; color: var(--text-secondary);">Auto-guardado</span>
+            <button id="saveToggle" class="toggle-switch">
+                <span id="saveToggleThumb" class="toggle-thumb"></span>
+            </button>
+        </div>
+        <div id="saveStatus" style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem;">DESACTIVADO</div>
+        <div id="saveStats" style="font-size: 0.75rem; color: var(--text-muted);">0 imágenes guardadas</div>
+    </div>
+
+    <!-- Manual Save Button -->
+    <button id="manualSaveBtn" class="btn btn-primary" style="width: 100%;" disabled>
+        <i data-lucide="download"></i>
+        Guardar Ahora
+    </button>
+
+    <!-- Additional Actions -->
+    <div class="btn-grid" style="margin-top: 0.5rem;">
+        <button id="viewSavedBtn" class="btn btn-secondary">
+            <i data-lucide="folder"></i>
+            Ver Guardadas
+        </button>
+        <button id="syncSaveStateBtn" class="btn btn-secondary" title="Sincronizar con servidor">
+            <i data-lucide="refresh-cw"></i>
+            Sincronizar
+        </button>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="panel-section">
+    <h3 class="section-title">📊 Estadísticas en Vivo</h3>
+
+    <div class="stats-grid">
+        <!-- Camera Stats -->
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon">📷</span>
+                <span class="stat-title">Cámara</span>
+            </div>
+            <div>
+                <div class="stat-row">
+                    <span class="stat-label">Frames:</span>
+                    <span id="cameraFrames" class="stat-value">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Heap:</span>
+                    <span id="cameraHeap" class="stat-value">--</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Uptime:</span>
+                    <span id="cameraUptime" class="stat-value">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Server Stats -->
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon">🖥️</span>
+                <span class="stat-title">Servidor</span>
+            </div>
+            <div>
+                <div class="stat-row">
+                    <span class="stat-label">Frames:</span>
+                    <span id="serverFrames" class="stat-value">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Total:</span>
+                    <span id="serverData" class="stat-value">0 MB</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">FPS:</span>
+                    <span id="serverFps" class="stat-value">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saver Stats -->
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon">💾</span>
+                <span class="stat-title">Guardado</span>
+            </div>
+            <div>
+                <div class="stat-row">
+                    <span class="stat-label">Total:</span>
+                    <span id="savedImages" class="stat-value">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Hoy:</span>
+                    <span id="todayImages" class="stat-value">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Último:</span>
+                    <span id="lastSaved" class="stat-value truncate">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Stats -->
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-icon">📈</span>
+                <span class="stat-title">Rendimiento</span>
+            </div>
+            <div>
+                <div class="stat-row">
+                    <span class="stat-label">FPS Actual:</span>
+                    <span id="liveFps" class="stat-value">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Latencia:</span>
+                    <span id="latency" class="stat-value">--</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Clientes:</span>
+                    <span id="serverClients" class="stat-value">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actions Section -->
+<div class="panel-section">
+    <h3 class="section-title">🎬 Acciones Rápidas</h3>
+
+    <div class="btn-grid">
+        <button id="captureBtn" class="btn btn-success">
+            <i data-lucide="camera"></i>
+            Capturar
+        </button>
+        <button id="quickCaptureBtn" class="btn btn-success">
+            <i data-lucide="zap"></i>
+            Quick Snap
+        </button>
+        <button id="fullscreenBtn" class="btn btn-primary">
+            <i data-lucide="maximize"></i>
+            Pantalla
+        </button>
+        <button id="zoomBtn" class="btn btn-primary">
+            <i data-lucide="zoom-in"></i>
+            Zoom 1:1
+        </button>
+        <button id="freezeFrameBtn" class="btn btn-secondary">
+            <i data-lucide="pause"></i>
+            Pausar
+        </button>
+        <button id="refreshStatsBtn" class="btn btn-secondary">
+            <i data-lucide="refresh-cw"></i>
+            Refrescar
+        </button>
+    </div>
+</div>
+
+<!-- System Actions Section -->
+<div class="panel-section">
+    <h3 class="section-title">⚡ Acciones del Sistema</h3>
+
+    <div class="btn-grid">
+        <button id="resetSensorBtn" class="btn" style="background: var(--warning); color: white;">
+            <i data-lucide="tool"></i>
+            Reset Sensor
+        </button>
+        <button id="rebootBtn" class="btn btn-danger">
+            <i data-lucide="power"></i>
+            Reiniciar
+        </button>
+    </div>
+
+    <!-- Connection Info -->
+    <div
+        style="margin-top: 1rem; padding: 0.75rem; background: rgba(6, 182, 212, 0.05); border-radius: var(--radius-md); border: 1px solid rgba(6, 182, 212, 0.15);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Tiempo de Conexión</span>
+            <span id="connectionDuration" class="mono"
+                style="font-size: 0.875rem; color: var(--primary);">--:--:--</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.75rem; color: var(--text-muted);">IP Cámara</span>
+            <span id="cameraIp" class="mono" style="font-size: 0.875rem; color: var(--primary);">--.--.--.--</span>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Info -->
+<div
+    style="padding: 1rem; text-align: center; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border-color);">
+    <div>ESP32 Vision Pro v2.0</div>
+    <div style="margin-top: 0.25rem;">Arquitectura Modular</div>
+</div>

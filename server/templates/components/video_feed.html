@@ -1,0 +1,47 @@
+<!-- Video Feed -->
+<main class="video-section">
+  <div class="video-container">
+    <img
+      id="videoStream"
+      class="video-stream"
+      alt="Camera Stream"
+      style="display: none"
+    />
+
+    <!-- No Stream Overlay -->
+    <div id="videoOverlay" class="no-stream-overlay">
+      <div class="overlay-content">
+        <div class="overlay-icon">
+          <i data-lucide="camera-off"></i>
+        </div>
+        <h3 class="overlay-title">Cámara Desconectada</h3>
+        <p class="overlay-text">Esperando conexión desde ESP32...</p>
+        <div class="overlay-status">
+          <div class="pulse-dot"></div>
+          <span>Conectando...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Floating Button -->
+    <button id="mobileRestartBtn" class="mobile-fab">
+      <i data-lucide="refresh-cw"></i>
+    </button>
+
+    <!-- Video Info Overlay -->
+    <div class="video-info">
+      <div class="info-badge">
+        <span class="info-label">FPS:</span>
+        <span id="videoFps" class="info-value">0</span>
+      </div>
+      <div class="info-badge">
+        <span class="info-label">Quality:</span>
+        <span id="videoQuality" class="info-value">12</span>
+      </div>
+      <div id="frame-drop-indicator" class="info-badge hidden">
+        <span class="info-label">Drops:</span>
+        <span id="drop-count" class="info-value">0</span>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,98 @@
+<header class="header">
+    <!-- Logo and Status -->
+    <div class="header-left">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                </svg>
+            </div>
+            <div class="brand-text">
+                <h1 class="text-xl font-bold">
+                    <span class="text-gradient">ESP32</span>
+                    <span class="text-white">Vision</span>
+                </h1>
+                <div class="version">WebSocket v2.1 • OV2640/OV7670</div>
+            </div>
+        </div>
+
+        <div class="status-container">
+            <div class="status-item">
+                <div id="status-dot" class="status-dot disconnected"></div>
+                <div class="status-info">
+                    <span id="connection-status" class="status-text">DESCONECTADO</span>
+                    <span id="connection-duration" class="status-subtext">--:--:--</span>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-icon">📷</div>
+                <div class="status-info">
+                    <span class="status-label">Cámara</span>
+                    <span id="camera-model" class="status-value">OV2640</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Indicators -->
+    <div class="header-center">
+        <div class="performance-grid">
+            <div class="performance-item">
+                <span class="performance-label">FPS:</span>
+                <span id="fps-counter" class="performance-value">0</span>
+            </div>
+            <div class="performance-item">
+                <span class="performance-label">Res:</span>
+                <span id="current-resolution-header" class="performance-value">{{ resolutions[default_resolution]
+                    }}</span>
+            </div>
+            <div class="performance-item">
+                <span class="performance-label">Lat:</span>
+                <span id="latency-header" class="performance-value">-- ms</span>
+            </div>
+            <div class="performance-item">
+                <span class="performance-label">IP:</span>
+                <span id="camera-ip" class="performance-value">--.--.--.--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Info -->
+    <div class="header-right">
+        <div class="system-info">
+            <div class="info-item">
+                <span class="info-label">Servidor:</span>
+                <span id="server-uptime-header" class="info-value">--:--:--</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Memoria:</span>
+                <span id="memory-usage" class="info-value">--%</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Clientes:</span>
+                <span id="connected-clients" class="info-value text-green-400">1</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <button id="settings-menu-btn" class="header-btn" title="Configuración">
+                ⚙️
+            </button>
+            <button id="help-btn" class="header-btn" title="Ayuda">
+                ❓
+            </button>
+            <button id="dark-mode-toggle" class="header-btn" title="Modo oscuro/claro">
+                🌙
+            </button>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <span id="notification-icon" class="notification-icon">ℹ️</span>
+            <span id="notification-message" class="notification-message">Notificación</span>
+        </div>
+    </div>
+</header>
