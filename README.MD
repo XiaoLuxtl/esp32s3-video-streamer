@@ -13,7 +13,7 @@
   </video>
 </p>
 
-Sistema de streaming de video de alta eficiencia diseñado para el **ESP32-S3-DevKitC-1** con sensor **OV3660**. Este proyecto destaca por una arquitectura de comunicación desacoplada y un firmware altamente modularizado.
+Sistema de streaming de video de alta eficiencia diseñado para el **ESP32-S3-N16R8** con sensor **OV3660**. Este proyecto destaca por una arquitectura de comunicación desacoplada y un firmware altamente modularizado.
 ---
 
 ## 🏗️ Arquitectura de Comunicación Dual
