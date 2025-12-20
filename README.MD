@@ -33,20 +33,33 @@ Para optimizar el rendimiento y evitar latencia en los comandos por el flujo de 
 .
 ├── firmware                 # Desarrollo C++ (PlatformIO)
 │   ├── src
-│   │   ├── camera_manager   # Control avanzado del sensor OV3660
-│   │   ├── command_processor# Procesador de comandos y lógica de control
-│   │   ├── configuration    # Definición de pines y credenciales (secrets)
-│   │   ├── fps_controller   # Regulador de tasa de frames
-│   │   ├── frame_sender     # Empaquetado binario y envío de imágenes
-│   │   ├── health_monitor   # Monitor de recursos y rendimiento
-│   │   ├── websocket_manager# Gestión de conexiones duales (6971/6972)
-│   │   └── wifi_manager     # Lógica de red y reconexión automática
-│   └── platformio.ini       # Configuración de entorno y dependencias
-└── server                   # Fullstack Server (Python/JS)
-    ├── app.py               # Punto de entrada Flask/WebSockets
-    ├── camera_server.py     # Lógica de backend para el procesamiento de stream
-    ├── static/js            # Módulos frontend (WebSockets, Controls, UI)
-    └── templates            # Interfaz de usuario reactiva (Jinja2)
+│   │   ├── camera_manager   # Lógica de bajo nivel para el sensor OV3660
+│   │   ├── command_processor# Parser de JSON y ejecución de acciones
+│   │   ├── configuration    # Configuración de red, pines y secretos
+│   │   ├── fps_controller   # Gestión de tiempos y suavidad del stream
+│   │   ├── frame_sender     # Empaquetado binario de frames para transporte
+│   │   ├── health_monitor   # Telemetría de sistema (Memoria, Uptime)
+│   │   ├── websocket_manager# Cliente WebSocket dual (Control/Stream)
+│   │   ├── wifi_manager     # Gestión de conexión y watchdog de red
+│   │   └── main.cpp         # Orquestador principal del sistema
+│   └── platformio.ini       # Dependencias y perfiles de compilación
+│
+└── server                   # Backend & Frontend (Python/JS)
+    ├── app.py               # Servidor Flask y punto de entrada
+    ├── camera_server.py     # Procesamiento lógico del stream entrante
+    ├── image_saver.py       # Utilidad para persistencia de capturas
+    ├── requirements.txt     # Dependencias de Python
+    ├── static/
+    │   ├── css/             # Estilos modernos del Dashboard
+    │   └── js/              # Arquitectura Frontend Modular:
+    │       ├── websocket.js # Gestión de túneles de datos
+    │       ├── controls.js  # Lógica de la interfaz de usuario
+    │       ├── image-saver.js # Interacción con el sistema de guardado
+    │       ├── notifications.js # Feedback visual al usuario
+    │       └── app.js       # Inicialización y pegamento del frontend
+    └── templates/           # Estructura de plantillas Jinja2:
+        ├── components/      # Fragmentos reutilizables (Sidebar, Feed, Header)
+        └── index.html       # Vista principal
 ```
 
 ---
