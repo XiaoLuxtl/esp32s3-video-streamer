@@ -1,7 +1,16 @@
 # 📸 ESP32-S3 Camera WebSocket (Modular)
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/8f298395-81b6-4b6e-a4ea-9b2534fb09f9" width="800">
+  <video 
+    src="https://github.com/user-attachments/assets/8f298395-81b6-4b6e-a4ea-9b2534fb09f9" 
+    width="800" 
+    autoplay 
+    muted 
+    loop 
+    playsinline 
+    title="Demo del sistema de streaming y panel de control">
+    Tu navegador no soporta videos incrustados. Puedes ver la demo directamente en el enlace de assets.
+  </video>
 </p>
 
 Sistema de streaming de video de alta eficiencia diseñado para el **ESP32-S3-DevKitC-1** con sensor **OV3660**. Este proyecto destaca por una arquitectura de comunicación desacoplada y un firmware altamente modularizado.
