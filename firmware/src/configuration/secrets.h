@@ -2,8 +2,13 @@
 #define SECRETS_H
 
 // === CREDENCIALES WIFI ===
-extern const char *ssid;
-extern const char *password;
+struct WifiCredential {
+    const char* ssid;
+    const char* password;
+};
+
+extern const WifiCredential wifiCredentials[];
+extern const int wifiCredentialCount;
 
 // === SERVIDOR WEBSOCKET ===
 extern const char *server_host;

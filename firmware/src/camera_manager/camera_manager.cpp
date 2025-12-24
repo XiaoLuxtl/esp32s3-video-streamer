@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 CameraManager::CameraManager()
-    : currentResolution(FRAMESIZE_VGA), currentQuality(DEFAULT_QUALITY)
+    : currentResolution(FRAMESIZE_XGA), currentQuality(DEFAULT_QUALITY)
 {
 }
 
@@ -50,12 +50,26 @@ bool CameraManager::initCamera()
     sensor_t *s = esp_camera_sensor_get();
     if (s)
     {
-        delay(DELAY_CAMERA_STABILIZATION);
+        delay(DELAY_CAMERA_STABILIZATION); // Espera inicial
         s->set_framesize(s, currentResolution);
-        s->set_vflip(s, 0);
-        s->set_hmirror(s, 0);
+        
+        // Habilitar controles automáticos para mejor adaptación inicial
+        s->set_exposure_ctrl(s, 1);
         s->set_gain_ctrl(s, 1);
-        s->set_agc_gain(s, 0);
+        s->set_whitebal(s, 1);
+
+        // === WARMUP (CALENTAMIENTO) ===
+        // Capturar y descartar frames para que el AEC/AGC se estabilicen
+        Serial.println("[CAM] 🔥 Iniciando secuencia de calentamiento...");
+        for (int i = 0; i < 5; i++) {
+            camera_fb_t *fb = esp_camera_fb_get();
+            if (fb) {
+                esp_camera_fb_return(fb);
+                // Serial.printf("[CAM] Warmup frame %d\n", i+1);
+            }
+            delay(100); // Pequeña pausa entre frames
+        }
+        Serial.println("[CAM] ✅ Calentamiento completado");
     }
     return true;
 }
