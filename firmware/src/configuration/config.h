@@ -21,12 +21,12 @@
 #define DELAY_AFTER_FOOTER_STABILITY 200  // ms después de footer
 #define DELAY_SMALL_FRAME_STABILITY 50    // ms para frames pequeños
 
-// Modo Velocidad
-#define DELAY_BETWEEN_CHUNKS_SPEED 10 // ms entre chunks (velocidad)
-#define DELAY_AFTER_HEADER_SPEED 50   // ms después de enviar header
-#define DELAY_AFTER_FRAME_SPEED 50    // ms después de frame completo
-#define DELAY_AFTER_FOOTER_SPEED 50   // ms después de footer
-#define DELAY_SMALL_FRAME_SPEED 20    // ms para frames pequeños
+// Modo Velocidad (OPTIMIZADO para FPS altos)
+#define DELAY_BETWEEN_CHUNKS_SPEED 1 // ms entre chunks
+#define DELAY_AFTER_HEADER_SPEED 2   // ms después de enviar heade
+#define DELAY_AFTER_FRAME_SPEED 2    // ms después de frame completo
+#define DELAY_AFTER_FOOTER_SPEED 5   // ms después de footer
+#define DELAY_SMALL_FRAME_SPEED 1    // ms para frames pequeños
 
 // Delays mínimos del sistema (siempre activos)
 #define DELAY_MAIN_LOOP 5              // ms en el loop principal
@@ -42,13 +42,13 @@
 #define CHUNK_SIZE_SMALL 2048 // 2KB
 
 // Para imágenes medianas-grandes (100-200KB)
-#define CHUNK_SIZE_MEDIUM 4096 // 4KB
+#define CHUNK_SIZE_MEDIUM 6144 // 6KB (era 4KB, +50% para velocidad)
 
 // Para imágenes grandes (200-400KB) - HD, SXGA
-#define CHUNK_SIZE_LARGE 8192 // 8KB
+#define CHUNK_SIZE_LARGE 12288 // 12KB (era 8KB, +50% para velocidad)
 
 // Para imágenes muy grandes (>400KB) - FHD, QXGA
-#define CHUNK_SIZE_XLARGE 16384 // 16KB
+#define CHUNK_SIZE_XLARGE 24576 // 24KB (era 16KB, +50% para velocidad)
 
 // === UMBRALES DE TAMAÑO DE FRAME ===
 #define FRAME_SIZE_SMALL 10000  // ≤10KB - Envío directo
