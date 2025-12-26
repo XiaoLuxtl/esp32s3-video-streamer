@@ -2,9 +2,9 @@
 
 // === DEFINICIONES REALES ===
 const WifiCredential wifiCredentials[] = {
-    {"TUSSID5214", "SuperContrasenha"},     // Red Principal
-    {"Red_Secundaria", "password123"},      // Red Respaldo 1
-    {"Red_Oficina", "oficina2024"}          // Red Respaldo 2
+    {"_HolaTengoInternet", "HAHAHAHAHA"},  // Red Principal
+    {"_WifiEntrada", "mimamamemima"},      // Red Respaldo 1
+    {"_Deco-Craft_2.4", "Deco-Craft-P455"} // Red Respaldo 2
 };
 const int wifiCredentialCount = sizeof(wifiCredentials) / sizeof(wifiCredentials[0]);
 

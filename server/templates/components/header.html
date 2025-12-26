@@ -19,17 +19,17 @@
 
         <div class="status-container">
             <div class="status-item">
-                <div id="status-dot" class="status-dot disconnected"></div>
+                <div id="statusDot" class="status-dot disconnected"></div>
                 <div class="status-info">
-                    <span id="connection-status" class="status-text">DESCONECTADO</span>
-                    <span id="connection-duration" class="status-subtext">--:--:--</span>
+                    <span id="statusText" class="status-text">DESCONECTADO</span>
+                    <span id="connectionTime" class="status-subtext">--:--:--</span>
                 </div>
             </div>
             <div class="status-item">
                 <div class="status-icon">📷</div>
                 <div class="status-info">
                     <span class="status-label">Cámara</span>
-                    <span id="camera-model" class="status-value">OV2640</span>
+                    <span id="cameraModel" class="status-value">OV2640</span>
                 </div>
             </div>
         </div>
@@ -40,20 +40,20 @@
         <div class="performance-grid">
             <div class="performance-item">
                 <span class="performance-label">FPS:</span>
-                <span id="fps-counter" class="performance-value">0</span>
+                <span id="fpsCounter" class="performance-value">0</span>
             </div>
             <div class="performance-item">
                 <span class="performance-label">Res:</span>
-                <span id="current-resolution-header" class="performance-value">{{ resolutions[default_resolution]
+                <span id="currentResHeader" class="performance-value">{{ resolutions[default_resolution]
                     }}</span>
             </div>
             <div class="performance-item">
                 <span class="performance-label">Lat:</span>
-                <span id="latency-header" class="performance-value">-- ms</span>
+                <span id="latencyHeader" class="performance-value">-- ms</span>
             </div>
             <div class="performance-item">
                 <span class="performance-label">IP:</span>
-                <span id="camera-ip" class="performance-value">--.--.--.--</span>
+                <span id="cameraIpHeader" class="performance-value">--.--.--.--</span>
             </div>
         </div>
     </div>
@@ -63,15 +63,15 @@
         <div class="system-info">
             <div class="info-item">
                 <span class="info-label">Servidor:</span>
-                <span id="server-uptime-header" class="info-value">--:--:--</span>
+                <span id="serverUptimeHeader" class="info-value">--:--:--</span>
             </div>
             <div class="info-item">
                 <span class="info-label">Memoria:</span>
-                <span id="memory-usage" class="info-value">--%</span>
+                <span id="memoryUsage" class="info-value">--%</span>
             </div>
             <div class="info-item">
                 <span class="info-label">Clientes:</span>
-                <span id="connected-clients" class="info-value text-green-400">1</span>
+                <span id="connectedClients" class="info-value text-green-400">1</span>
             </div>
         </div>
 

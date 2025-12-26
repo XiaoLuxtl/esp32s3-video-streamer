@@ -41,6 +41,45 @@ export class WebSocketManager {
     this.on("server_stats", this.handleServerStats.bind(this));
   }
 
+  updateHeaderStats(cameraData) {
+    // Update camera IP
+    if (this.elements.cameraIpHeader && cameraData.ip) {
+      this.elements.cameraIpHeader.textContent = cameraData.ip;
+    }
+
+    // Update camera model
+    if (this.elements.cameraModel && cameraData.model) {
+      this.elements.cameraModel.textContent = cameraData.model;
+    }
+
+    // Update resolution
+    if (this.elements.currentResHeader && cameraData.resolution) {
+      this.elements.currentResHeader.textContent = cameraData.resolution;
+    }
+
+    // Update latency
+    if (this.elements.latencyHeader && cameraData.latency !== undefined) {
+      this.elements.latencyHeader.textContent = `${cameraData.latency} ms`;
+    }
+  }
+
+  updateServerStats(serverData) {
+    // Update server uptime
+    if (this.elements.serverUptimeHeader && serverData.uptime !== undefined) {
+      this.elements.serverUptimeHeader.textContent = this.formatUptime(serverData.uptime);
+    }
+
+    // Update memory usage
+    if (this.elements.memoryUsage && serverData.memory !== undefined) {
+      this.elements.memoryUsage.textContent = `${serverData.memory}%`;
+    }
+
+    // Update connected clients
+    if (this.elements.connectedClients && serverData.clients !== undefined) {
+      this.elements.connectedClients.textContent = serverData.clients;
+    }
+  }
+
   on(event, handler) {
     if (!this.messageHandlers.has(event)) {
       this.messageHandlers.set(event, []);
@@ -122,8 +161,8 @@ export class WebSocketManager {
             event.data instanceof Blob
               ? "Blob"
               : event.data instanceof ArrayBuffer
-              ? "ArrayBuffer"
-              : "Other"
+                ? "ArrayBuffer"
+                : "Other"
           );
         // Mensaje binario (frame JPEG)
         if (event.data instanceof Blob) {
@@ -249,6 +288,14 @@ export class WebSocketManager {
     if (elements.cameraUptime && health.uptime) {
       elements.cameraUptime.textContent = this.formatUptime(health.uptime);
     }
+
+    // Update header with camera data
+    this.updateHeaderStats({
+      ip: health.ip,
+      model: health.model || "OV3660",
+      resolution: health.resolution,
+      latency: health.latency
+    });
   }
 
   handleServerStats(stats) {
@@ -273,9 +320,16 @@ export class WebSocketManager {
     if (elements.serverFps) elements.serverFps.textContent = stats.fps || 0;
     if (elements.serverClients)
       elements.serverClients.textContent = stats.clients || 1;
-    if (elements.latency && stats.latency) {
-      elements.latency.textContent = `${stats.latency}ms`;
+    if (elements.latency && stats.latency !== undefined) {
+      elements.latency.textContent = `${stats.latency} ms`;
     }
+
+    // Update header server stats
+    this.updateServerStats({
+      uptime: stats.uptime,
+      memory: stats.memory,
+      clients: stats.clients || 1
+    });
   }
 
   formatUptime(seconds) {
