@@ -37,7 +37,7 @@ RESOLUTIONS = {
 }
 
 # Resolución por defecto
-DEFAULT_RESOLUTION = 5  # VGA
+DEFAULT_RESOLUTION = 7  # XGA
 
 # === CAMERA COMMANDS ===
 COMMANDS = {

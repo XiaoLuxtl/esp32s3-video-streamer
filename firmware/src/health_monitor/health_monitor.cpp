@@ -59,27 +59,56 @@ String HealthMonitor::generateHealthJson()
     json += "\"minHeap\":" + String(esp_get_minimum_free_heap_size()) + ",";
     json += "\"rssi\":" + String(WiFi.RSSI()) + ",";
     json += "\"uptime\":\"" + formatUptime(uptime) + "\",";
-    
+
     // Camera metadata
     json += "\"ip\":\"" + WiFi.localIP().toString() + "\",";
     json += "\"model\":\"OV3660\",";
-    
+
     // Resolution (obtenerlo del sensor si es posible)
     sensor_t *s = esp_camera_sensor_get();
     String resolution = "Unknown";
-    if (s) {
-        switch (s->status.framesize) {
-            case FRAMESIZE_QVGA: resolution = "QVGA (320x240)"; break;
-            case FRAMESIZE_VGA: resolution = "VGA (640x480)"; break;
-            case FRAMESIZE_SVGA: resolution = "SVGA (800x600)"; break;
-            case FRAMESIZE_XGA: resolution = "XGA (1024x768)"; break;
-            case FRAMESIZE_HD: resolution = "HD (1280x720)"; break;
-            case FRAMESIZE_SXGA: resolution = "SXGA (1280x1024)"; break;
-            case FRAMESIZE_UXGA: resolution = "UXGA (1600x1200)"; break;
-            default: resolution = "Custom"; break;
+    if (s)
+    {
+        switch (s->status.framesize)
+        {
+        case FRAMESIZE_QVGA:
+            resolution = "QVGA (320x240)";
+            break;
+        case FRAMESIZE_VGA:
+            resolution = "VGA (640x480)";
+            break;
+        case FRAMESIZE_SVGA:
+            resolution = "SVGA (800x600)";
+            break;
+        case FRAMESIZE_XGA:
+            resolution = "XGA (1024x768)";
+            break;
+        case FRAMESIZE_HD:
+            resolution = "HD (1280x720)";
+            break;
+        case FRAMESIZE_SXGA:
+            resolution = "SXGA (1280x1024)";
+            break;
+        case FRAMESIZE_UXGA:
+            resolution = "UXGA (1600x1200)";
+            break;
+        case FRAMESIZE_FHD:
+            resolution = "FHD (1920x1080)";
+            break;
+        case FRAMESIZE_QXGA:
+            resolution = "QXGA (2048x1536)";
+            break;
+        default:
+            resolution = "Custom";
+            break;
         }
     }
-    json += "\"resolution\":\"" + resolution + "\"";
+    json += "\"resolution\":\"" + resolution + "\",";
+    if (s) {
+        json += "\"quality\":" + String(s->status.quality);
+    } else {
+        json += "\"quality\":12";
+    }
     json += "}";
 
     return json;

@@ -74,9 +74,8 @@ class CameraApp {
     // Mostrar en UI si hay elementos para ello
     const systemInfo = document.getElementById("system-info");
     if (systemInfo) {
-      systemInfo.textContent = `${
-        navigator.platform
-      } | ${this.getBrowserName()}`;
+      systemInfo.textContent = `${navigator.platform
+        } | ${this.getBrowserName()}`;
     }
   }
 
@@ -535,8 +534,8 @@ class CameraApp {
   }
 
   showFrameDropWarning() {
-    const dropIndicator = document.getElementById("frame-drop-indicator");
-    const dropCount = document.getElementById("drop-count");
+    const dropIndicator = document.getElementById("frameDropIndicator");
+    const dropCount = document.getElementById("dropCount");
 
     if (dropIndicator && dropCount) {
       dropCount.textContent = this.frameDrops;

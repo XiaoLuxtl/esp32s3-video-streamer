@@ -30,6 +30,8 @@ export class WebSocketManager {
       noStreamOverlay: document.getElementById("videoOverlay"),
       videoFps: document.getElementById("videoFps"),
       videoQuality: document.getElementById("videoQuality"),
+      cameraIpSidebar: document.getElementById("cameraIpSidebar"),
+      latencySidebar: document.getElementById("latency"), // En sidebar es 'latency'
     };
     if (DEBUG) console.log("Gathered elements:", elements);
     return elements;
@@ -296,6 +298,16 @@ export class WebSocketManager {
       resolution: health.resolution,
       latency: health.latency
     });
+
+    // Update sidebar IP if exists
+    if (this.elements.cameraIpSidebar && health.ip) {
+      this.elements.cameraIpSidebar.textContent = health.ip;
+    }
+
+    // Update Quality overlay on video feed
+    if (this.elements.videoQuality && health.quality !== undefined) {
+      this.elements.videoQuality.textContent = health.quality;
+    }
   }
 
   handleServerStats(stats) {
@@ -322,6 +334,11 @@ export class WebSocketManager {
       elements.serverClients.textContent = stats.clients || 1;
     if (elements.latency && stats.latency !== undefined) {
       elements.latency.textContent = `${stats.latency} ms`;
+    }
+
+    // Sync sidebar latency redundant element if exists
+    if (this.elements.latencySidebar && stats.latency !== undefined) {
+      this.elements.latencySidebar.textContent = `${stats.latency} ms`;
     }
 
     // Update header server stats
